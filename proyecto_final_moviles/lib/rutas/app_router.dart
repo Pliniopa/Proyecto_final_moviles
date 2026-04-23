@@ -2,6 +2,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_final_moviles/ventanas/Autenticacion/inicio_sesion.dart';
+import 'package:proyecto_final_moviles/ventanas/biblioteca.dart';
 import 'package:proyecto_final_moviles/ventanas/perfil.dart';
 import 'package:proyecto_final_moviles/ventanas/principal.dart';
 import 'package:proyecto_final_moviles/ventanas/Autenticacion/register.dart';
@@ -30,13 +31,11 @@ final appRouter = GoRouter(routes: [
     path: "/registro",
     name: "Registro",
     builder: (context, state) => Register(),),
-
-/*
   GoRoute(
     path: "/biblioteca",
     name: "biblioteca",
     builder: (context, state) => Biblioteca(),
-     )*/
+     ),
     
   GoRoute(
     path: "/VerificacionInicioSesion",

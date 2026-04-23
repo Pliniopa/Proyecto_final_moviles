@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_final_moviles/rutas/nav.dart';
+import 'package:proyecto_final_moviles/rutas/nav_biblio.dart';
 import 'package:proyecto_final_moviles/temas/dia.dart';
 import 'package:proyecto_final_moviles/temas/noche.dart';
 import 'package:proyecto_final_moviles/temas/nocturna.dart';
@@ -28,6 +29,7 @@ class _PrincipalState extends State<Principal> {
               ),
             ),
             const navegacion(),
+            navegacion_biblio(),
             BotonLuna(
               onPressed: () {
                 setState(() {
