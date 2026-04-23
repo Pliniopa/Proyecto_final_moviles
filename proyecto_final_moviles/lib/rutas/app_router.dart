@@ -35,5 +35,13 @@ final appRouter = GoRouter(routes: [
   GoRoute(
     path: "/biblioteca",
     name: "biblioteca",
-    builder: (context, state) => Biblioteca(),)*/
+    builder: (context, state) => Biblioteca(),
+     )*/
+
+    GoRoute(
+    path: "/icono",
+    name: "Icon",
+    builder: (context, state) => register(),),
+    
+   
 ]);

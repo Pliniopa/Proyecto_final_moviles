@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_final_moviles/ventanas/icon.dart';
 
 class inicio_sesion extends StatefulWidget {
   const inicio_sesion({super.key});
@@ -19,6 +20,12 @@ class _inicio_sesionState extends State<inicio_sesion> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Inicio de Sesión"),
+            Text(""),
+            Container(
+              width: 100,
+              height: 100,
+              child: IconoInicio(),
+            ),
             SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
