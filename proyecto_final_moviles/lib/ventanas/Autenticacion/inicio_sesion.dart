@@ -25,7 +25,7 @@ final TextEditingController _passwordController = TextEditingController();
           children: [
             Text("Inicio de Sesión"),
             Text(""),
-            Container(
+            SizedBox(
               width: 100,
               height: 100,
               child: IconoInicio(),
