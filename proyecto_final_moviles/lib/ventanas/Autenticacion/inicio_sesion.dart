@@ -1,77 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_final_moviles/servicios/login_usuario.dart';
 import 'package:proyecto_final_moviles/ventanas/Foto_perfil/icon.dart';
 
-class inicio_sesion extends StatefulWidget {
-  const inicio_sesion({super.key});
+class InicioSesion extends StatefulWidget {
+  const InicioSesion({super.key});
 
   @override
-  State<inicio_sesion> createState() => _inicio_sesionState();
-  
+  State<InicioSesion> createState() => _InicioSesionState();
 }
 
-class _inicio_sesionState extends State<inicio_sesion> {
-
-final TextEditingController _passwordController = TextEditingController();
-
+class _InicioSesionState extends State<InicioSesion> {
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Colors.white,
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Inicio de Sesión"),
-            Text(""),
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: IconoInicio(),
+            const Text(
+              "Inicio de Sesión",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            const IconoInicio(),
+            const SizedBox(height: 20),
+
+            // Correo electrónico
             TextField(
-              decoration: InputDecoration(
+              controller: _userController,
+              decoration: const InputDecoration(
                 labelText: "Correo Electrónico",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+
+            // Contraseña
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Contraseña",
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+
+            // Botón iniciar sesión
             ElevatedButton(
-              onPressed: () {
-                if (_passwordController == _passwordController){
-                  context.goNamed("Principal");
-                }
-                else{
+              onPressed: () async {
+                String usuario = _userController.text.trim();
+                String contrasena = _passwordController.text.trim();
+
+                if (usuario.isEmpty || contrasena.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Por favor, ingresa una contraseña para registrarte."))
+                    const SnackBar(content: Text("Por favor completa todos los campos")),
+                  );
+                  return;
+                }
+
+                // Llamar al servicio de login
+                final response = await loginUsuario(usuario, contrasena);
+
+                if (response.containsKey("status") &&
+                    response["status"] == "success") {
+                  context.goNamed("Principal");
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        response["message"] ?? "Credenciales inválidas",
+                      ),
+                    ),
                   );
                 }
-                
-                // Lógica de inicio de sesión aquí
               },
-              child: Text("Iniciar Sesión"),
+              child: const Text("Iniciar Sesión"),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
+            // Botón registro
             ElevatedButton(
               onPressed: () {
-                
                 context.goNamed("Registro");
-
-                // Lógica de registro aquí
               },
-              child: Text("Registrarse"),
+              child: const Text("Registrarse"),
             ),
           ],
         ),

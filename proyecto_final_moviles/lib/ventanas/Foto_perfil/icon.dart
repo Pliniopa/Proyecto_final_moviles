@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class IconoInicio extends StatelessWidget {
-  final String imagen_1 = "../assets/img/imagen.png";
+  final String imagen_1 = "../assets/img/imagen_corporativa.png";
 
   const IconoInicio({super.key});
 

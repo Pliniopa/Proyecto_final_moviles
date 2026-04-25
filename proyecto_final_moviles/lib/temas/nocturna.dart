@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
+import 'package:proyecto_final_moviles/servicios/servicios.dart';
 class BotonLuna extends StatefulWidget {
-  final VoidCallback? onPressed;
+  final ValueChanged<bool>? onToggle; // Notifica al padre
 
-  const BotonLuna({Key? key, this.onPressed}) : super(key: key);
+  const BotonLuna({super.key, this.onToggle});
 
   @override
   _BotonLunaState createState() => _BotonLunaState();
 }
 
 class _BotonLunaState extends State<BotonLuna> {
-  bool modoAlternativo = false;
+  final ThemeService _themeService = ThemeService();
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +21,12 @@ class _BotonLunaState extends State<BotonLuna> {
         iconSize: 50,
         icon: Icon(
           Icons.nightlight_round,
-          color: modoAlternativo ? Colors.yellow : Colors.black,
+          color: _themeService.modoOscuro ? Colors.yellow : Colors.black,
         ),
-        onPressed: () {
-          setState(() {
-            modoAlternativo = !modoAlternativo;
-          });
-          if (widget.onPressed != null) {
-            widget.onPressed!();
-          }
+        onPressed: () async {
+          await _themeService.toggleTema();
+          setState(() {});
+          widget.onToggle?.call(_themeService.modoOscuro);
         },
       ),
     );

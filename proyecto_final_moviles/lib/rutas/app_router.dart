@@ -25,7 +25,7 @@ final appRouter = GoRouter(routes: [
     GoRoute(
     path: "/",
     name: "inicio_sesion",
-    builder: (context, state) => inicio_sesion(),),
+    builder: (context, state) => InicioSesion(),),
 
     GoRoute(
     path: "/registro",

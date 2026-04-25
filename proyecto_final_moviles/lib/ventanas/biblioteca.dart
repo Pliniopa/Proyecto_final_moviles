@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_final_moviles/rutas/nav.dart';
-import 'package:proyecto_final_moviles/rutas/nav_biblio.dart';
 import 'package:proyecto_final_moviles/temas/dia.dart';
 import 'package:proyecto_final_moviles/temas/noche.dart';
 import 'package:proyecto_final_moviles/temas/nocturna.dart';
+import 'package:proyecto_final_moviles/servicios/servicios.dart';
 
 class Biblioteca extends StatefulWidget {
   const Biblioteca({super.key});
@@ -13,12 +13,12 @@ class Biblioteca extends StatefulWidget {
 }
 
 class _BibliotecaState extends State<Biblioteca> {
-  bool modoAlternativo = false; // controla si es día o noche
+  final ThemeService _themeService = ThemeService();
 
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: modoAlternativo ? temaNoche : temaDia,
+      data: _themeService.modoOscuro ? temaNoche : temaDia,
       child: Scaffold(
         body: Stack(
           children: [
@@ -30,11 +30,8 @@ class _BibliotecaState extends State<Biblioteca> {
             ),
             const navegacion(),
             BotonLuna(
-              onPressed: () {
-                setState(() {
-                  modoAlternativo = !modoAlternativo;
-                });
-                debugPrint("Botón luna presionado, modo: $modoAlternativo");
+              onToggle: (isDark) {
+                setState(() {});
               },
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_final_moviles/servicios/login_usuario.dart';
 import 'package:proyecto_final_moviles/ventanas/Foto_perfil/icon.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,7 +11,9 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  // Declaramos el controlador aquí
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _fechaController = TextEditingController();
 
   @override
@@ -18,15 +21,21 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       body: Container(
         color: Colors.white,
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Registro"),
+            const Text(
+              "Registro",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 20),
             const IconoInicio(),
             const SizedBox(height: 20),
 
+            // Nombre
             TextField(
+              controller: _nombreController,
               decoration: const InputDecoration(
                 labelText: "Nombre",
                 border: OutlineInputBorder(),
@@ -34,9 +43,10 @@ class _RegisterState extends State<Register> {
             ),
             const SizedBox(height: 20),
 
+            // Fecha de nacimiento
             TextField(
               controller: _fechaController,
-              readOnly: true, // evita que el usuario escriba
+              readOnly: true,
               decoration: const InputDecoration(
                 labelText: "Fecha de Nacimiento",
                 border: OutlineInputBorder(),
@@ -50,7 +60,6 @@ class _RegisterState extends State<Register> {
                   lastDate: DateTime.now(),
                 );
                 if (pickedDate != null) {
-                  // Aquí sí se asigna al campo
                   _fechaController.text =
                       "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
                 }
@@ -58,7 +67,9 @@ class _RegisterState extends State<Register> {
             ),
             const SizedBox(height: 20),
 
+            // Correo electrónico
             TextField(
+              controller: _userController,
               decoration: const InputDecoration(
                 labelText: "Correo Electrónico",
                 border: OutlineInputBorder(),
@@ -66,7 +77,9 @@ class _RegisterState extends State<Register> {
             ),
             const SizedBox(height: 20),
 
+            // Contraseña
             TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: const InputDecoration(
                 labelText: "Contraseña",
@@ -75,13 +88,37 @@ class _RegisterState extends State<Register> {
             ),
             const SizedBox(height: 20),
 
+            // Botón de registro
             ElevatedButton(
-                onPressed: () {
-                context.goNamed("VerificacionInicioSesion");
-                // Lógica de registro aquí
+              onPressed: () async {
+                String usuario = _userController.text.trim();
+                String passwd = _passwordController.text.trim();
+                String nombre = _nombreController.text.trim();
+                String fechaNacimiento = _fechaController.text.trim();
+
+                // Llamada al servicio de registro
+                final response = await registrarUsuario(
+                  usuario,
+                  passwd,
+                  nombre,
+                  fechaNacimiento,
+                );
+
+                // ✅ Bloque corregido
+                if (response.containsKey("status") &&
+                    response["status"] == "success") {
+                  context.goNamed("inicio_sesion");
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "Error en el registro: ${response["message"] ?? "Intenta nuevamente"}",
+                      ),
+                    ),
+                  );
+                }
               },
               child: const Text("Registrarse"),
-              
             ),
           ],
         ),
