@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:proyecto_final_moviles/servicios/login_usuario.dart';
-import 'package:proyecto_final_moviles/ventanas/Foto_perfil/icon.dart';
+import 'package:proyecto_final_moviles/temas/estilo_tintero.dart';
 
 class InicioSesion extends StatefulWidget {
   const InicioSesion({super.key});
@@ -11,89 +11,152 @@ class InicioSesion extends StatefulWidget {
 }
 
 class _InicioSesionState extends State<InicioSesion> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _userController = TextEditingController();
+
+  final List<String> _covers = const [
+    'assets/img/imagen1.png',
+    'assets/img/imagen3.png',
+    'assets/img/imagen4.png',
+  ];
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _userController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _login() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final response = await loginUsuario(
+      _userController.text.trim(),
+      _passwordController.text.trim(),
+    );
+
+    if (!mounted) return;
+
+    if (response["status"] == "success") {
+      context.goNamed("Principal");
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(response["message"] ?? "Credenciales inválidas"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Inicio de Sesión",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            const IconoInicio(),
-            const SizedBox(height: 20),
-
-            // Correo electrónico
-            TextField(
-              controller: _userController,
-              decoration: const InputDecoration(
-                labelText: "Correo Electrónico",
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Contraseña
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: "Contraseña",
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Botón iniciar sesión
-            ElevatedButton(
-              onPressed: () async {
-                String usuario = _userController.text.trim();
-                String contrasena = _passwordController.text.trim();
-
-                if (usuario.isEmpty || contrasena.isEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Por favor completa todos los campos")),
-                  );
-                  return;
-                }
-
-                // Llamar al servicio de login
-                final response = await loginUsuario(usuario, contrasena);
-
-                if (response.containsKey("status") &&
-                    response["status"] == "success") {
-                  context.goNamed("Principal");
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        response["message"] ?? "Credenciales inválidas",
-                      ),
+      body: TinteroBackground(
+        image: fondoInicio,
+        opacity: 0.56,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(24, 26, 24, 28),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const TinteroLogo(width: 170),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _userController,
+                    decoration: tinteroInputDecoration("Usuario"),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Ingresa tu usuario";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 30),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: tinteroInputDecoration("Contraseña"),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Ingresa tu contraseña";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  TextButton(
+                    onPressed: _login,
+                    child: const Text(
+                      "Ingresar",
+                      style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
-                  );
-                }
-              },
-              child: const Text("Iniciar Sesión"),
+                  ),
+                  TextButton(
+                    onPressed: () => context.goNamed("Registro"),
+                    child: const Text(
+                      "Registrar usuario",
+                      style: TextStyle(color: Colors.white, fontSize: 17),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  const TinteroWave(),
+                  const SizedBox(height: 22),
+                  SizedBox(
+                    height: 145,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        for (final cover in _covers)
+                          BookCover(image: cover, width: 108, height: 144),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  const _InfoPill(),
+                  const SizedBox(height: 20),
+                  const _InfoPill(),
+                ],
+              ),
             ),
-            const SizedBox(height: 20),
-
-            // Botón registro
-            ElevatedButton(
-              onPressed: () {
-                context.goNamed("Registro");
-              },
-              child: const Text("Registrarse"),
-            ),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _InfoPill extends StatelessWidget {
+  const _InfoPill();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      padding: const EdgeInsets.only(left: 25, right: 14),
+      decoration: BoxDecoration(
+        color: tinteroPanel,
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Row(
+        children: [
+          const Expanded(
+            child: Text(
+              "Tintero es una app para todos, aca puedes encontrar historias increibles.",
+              style: TextStyle(color: Colors.white, fontSize: 13),
+            ),
+          ),
+          Container(
+            width: 65,
+            height: 40,
+            decoration: const BoxDecoration(
+              color: Color(0xFFE0E0E0),
+              shape: BoxShape.circle,
+            ),
+          ),
+        ],
       ),
     );
   }

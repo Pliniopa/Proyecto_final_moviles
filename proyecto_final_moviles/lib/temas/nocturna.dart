@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_final_moviles/servicios/servicios.dart';
+
 class BotonLuna extends StatefulWidget {
   final ValueChanged<bool>? onToggle; // Notifica al padre
 
   const BotonLuna({super.key, this.onToggle});
 
   @override
-  _BotonLunaState createState() => _BotonLunaState();
+  State<BotonLuna> createState() => _BotonLunaState();
 }
 
 class _BotonLunaState extends State<BotonLuna> {
@@ -15,10 +16,10 @@ class _BotonLunaState extends State<BotonLuna> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 20,
-      right: 20,
+      top: 8,
+      right: 8,
       child: IconButton(
-        iconSize: 50,
+        iconSize: 30,
         icon: Icon(
           Icons.nightlight_round,
           color: _themeService.modoOscuro ? Colors.yellow : Colors.black,

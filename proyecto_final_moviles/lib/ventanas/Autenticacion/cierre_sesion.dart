@@ -9,14 +9,11 @@ Future<void> cerrarSesion(BuildContext context) async {
     // - Limpiar variables de sesión
     // - Eliminar tokens almacenados
     // - Cerrar conexiones de base de datos, etc.
-    
-    print("✅ Sesión cerrada correctamente");
-    
     // Navegar a la pantalla de inicio de sesión
     if (context.mounted) {
-      context.goNamed("InicioSesion");
+      context.goNamed("inicio_sesion");
     }
   } catch (e) {
-    print("❌ Error al cerrar sesión: $e");
+    debugPrint("Error al cerrar sesión: $e");
   }
 }

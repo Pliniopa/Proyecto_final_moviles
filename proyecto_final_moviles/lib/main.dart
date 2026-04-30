@@ -24,8 +24,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: appRouter,
-      theme: temaDia,          // Tema claro
-      darkTheme: temaNoche,    // Tema oscuro
+      theme: temaDia, // Tema claro
+      darkTheme: temaNoche, // Tema oscuro
       themeMode: _themeService.modoOscuro ? ThemeMode.dark : ThemeMode.light,
     );
   }

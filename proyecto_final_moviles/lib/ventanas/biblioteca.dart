@@ -1,487 +1,302 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_final_moviles/rutas/nav.dart';
-import 'package:proyecto_final_moviles/temas/dia.dart';
-import 'package:proyecto_final_moviles/temas/noche.dart';
-import 'package:proyecto_final_moviles/temas/nocturna.dart';
-import 'package:proyecto_final_moviles/servicios/servicios.dart';
+import 'package:proyecto_final_moviles/temas/estilo_tintero.dart';
 
-class Biblioteca extends StatefulWidget {
+class Biblioteca extends StatelessWidget {
   const Biblioteca({super.key});
 
-  @override
-  State<Biblioteca> createState() => _BibliotecaState();
-}
-
-class _BibliotecaState extends State<Biblioteca> {
-  final ThemeService _themeService = ThemeService();
-
-  // Ajusta bloques_lat al tamaño real de la lista
-  int bloques_lat = 8;
-
-  // Lista con información de cada bloque (imagen + título + descripción)
-  final List<Map<String, String>> bloquesInfo = [
+  static const List<Map<String, String>> continuar = [
     {
-      "titulo": "Libro A",
-      "descripcion": "Información del Libro A",
-      "imagen": "../assets/img/imagen1.png",
+      "titulo": "Pinocho",
+      "autor": "Carlo Collodi",
+      "imagen": "assets/img/imagen1.png",
+      "descripcion": "pinocho se escapo y el carpintero se lo trago la ballena",
     },
     {
-      "titulo": "Libro B",
-      "descripcion": "Información del Libro B",
-      "imagen": "../assets/img/imagen2.png",
+      "titulo": "Aquel bosque de magia",
+      "autor": "Anónimo",
+      "imagen": "assets/img/imagen5.png",
+      "descripcion":
+          "Un bosque encantado lleno de secretos y criaturas mágicas.",
     },
     {
-      "titulo": "Libro C",
-      "descripcion": "Información del Libro C",
-      "imagen": "../assets/img/imagen3.png",
+      "titulo": "El Bosque Mágico",
+      "autor": "Elena Estévez",
+      "imagen": "assets/img/imagen6.png",
+      "descripcion": "Una aventura luminosa entre árboles antiguos.",
     },
     {
-      "titulo": "Libro D",
-      "descripcion": "Información del Libro D",
-      "imagen": "../assets/img/imagen4.png",
+      "titulo": "El zorro en el bosque",
+      "autor": "Salma Duque",
+      "imagen": "assets/img/imagen7.png",
+      "descripcion": "Un pequeño zorro descubre el valor de su hogar.",
     },
     {
-      "titulo": "Libro E",
-      "descripcion": "Información del Libro E",
-      "imagen": "../assets/img/imagen5.png",
-    },
-    {
-      "titulo": "Libro F",
-      "descripcion": "Información del Libro F",
-      "imagen": "../assets/img/imagen6.png",
-    },
-    {
-      "titulo": "Libro G",
-      "descripcion": "Información del Libro G",
-      "imagen": "../assets/img/imagen7.png",
-    },
-    {
-      "titulo": "Libro H",
-      "descripcion": "Información del Libro H",
-      "imagen": "../assets/img/imagen8.png",
+      "titulo": "Literatura",
+      "autor": "Dorling Kindersley",
+      "imagen": "assets/img/imagen8.png",
+      "descripcion": "Un recorrido por historias, autores y mundos literarios.",
     },
   ];
 
-  final List<Map<String, String>> bloquesInfo2 = [
+  static const List<Map<String, String>> nuevos = [
     {
-      "titulo": "Libro A",
-      "descripcion": "Información del Libro A",
-      "imagen": "../assets/img/imagen8.png",
+      "titulo": "Historias de terror",
+      "autor": "Bernardo Hichado",
+      "imagen": "assets/img/imagen3.png",
+      "descripcion": "Relatos oscuros para leer con la luz encendida.",
     },
     {
-      "titulo": "Libro B",
-      "descripcion": "Información del Libro B",
-      "imagen": "../assets/img/imagen7.png",
+      "titulo": "Crea tu portada de libro",
+      "autor": "Gabriel L. Swift",
+      "imagen": "assets/img/imagen4.png",
+      "descripcion": "Ideas para construir portadas memorables.",
     },
     {
-      "titulo": "Libro C",
-      "descripcion": "Información del Libro C",
-      "imagen": "../assets/img/imagen6.png",
-    },
-    {
-      "titulo": "Libro D",
-      "descripcion": "Información del Libro D",
-      "imagen": "../assets/img/imagen5.png",
-    },
-    {
-      "titulo": "Libro E",
-      "descripcion": "Información del Libro E",
-      "imagen": "../assets/img/imagen4.png",
-    },
-    {
-      "titulo": "Libro F",
-      "descripcion": "Información del Libro F",
-      "imagen": "../assets/img/imagen3.png",
-    },
-    {
-      "titulo": "Libro G",
-      "descripcion": "Información del Libro G",
-      "imagen": "../assets/img/imagen2.png",
-    },
-    {
-      "titulo": "Libro H",
-      "descripcion": "Información del Libro H",
-      "imagen": "../assets/img/imagen1.png",
-    },
-  ];
-
-  final List<Map<String, String>> bloquesInfo3 = [
-    {
-      "titulo": "Libro A",
-      "descripcion": "Información del Libro A",
-      "imagen": "../assets/img/imagen5.png",
-    },
-    {
-      "titulo": "Libro B",
-      "descripcion": "Información del Libro B",
-      "imagen": "../assets/img/imagen6.png",
-    },
-    {
-      "titulo": "Libro C",
-      "descripcion": "Información del Libro C",
-      "imagen": "../assets/img/imagen7.png",
-    },
-    {
-      "titulo": "Libro D",
-      "descripcion": "Información del Libro D",
-      "imagen": "../assets/img/imagen8.png",
-    },
-    {
-      "titulo": "Libro E",
-      "descripcion": "Información del Libro E",
-      "imagen": "../assets/img/imagen1.png",
-    },
-    {
-      "titulo": "Libro F",
-      "descripcion": "Información del Libro F",
-      "imagen": "../assets/img/imagen2.png",
-    },
-    {
-      "titulo": "Libro G",
-      "descripcion": "Información del Libro G",
-      "imagen": "../assets/img/imagen3.png",
-    },
-    {
-      "titulo": "Libro H",
-      "descripcion": "Información del Libro H",
-      "imagen": "../assets/img/imagen4.png",
-    },
-  ];
-
-  final List<Map<String, String>> bloquesInfo4 = [
-    {
-      "titulo": "Libro A",
-      "descripcion": "Información del Libro A",
-      "imagen": "../assets/img/imagen5.png",
-    },
-    {
-      "titulo": "Libro B",
-      "descripcion": "Información del Libro B",
-      "imagen": "../assets/img/imagen4.png",
-    },
-    {
-      "titulo": "Libro C",
-      "descripcion": "Información del Libro C",
-      "imagen": "../assets/img/imagen3.png",
-    },
-    {
-      "titulo": "Libro D",
-      "descripcion": "Información del Libro D",
-      "imagen": "../assets/img/imagen2.png",
-    },
-    {
-      "titulo": "Libro E",
-      "descripcion": "Información del Libro E",
-      "imagen": "../assets/img/imagen1.png",
-    },
-    {
-      "titulo": "Libro F",
-      "descripcion": "Información del Libro F",
-      "imagen": "../assets/img/imagen6.png",
-    },
-    {
-      "titulo": "Libro G",
-      "descripcion": "Información del Libro G",
-      "imagen": "../assets/img/imagen7.png",
-    },
-    {
-      "titulo": "Libro H",
-      "descripcion": "Información del Libro H",
-      "imagen": "../assets/img/imagen8.png",
+      "titulo": "Simón",
+      "autor": "Miqui Otero",
+      "imagen": "assets/img/imagen2.png",
+      "descripcion": "Una historia urbana con aventuras inesperadas.",
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: _themeService.modoOscuro ? temaNoche : temaDia,
-      child: Scaffold(
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Center(
-                      child: Text("Biblioteca", style: TextStyle(fontSize: 24)),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  SizedBox(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(bloquesInfo.length, (index) {
-                        final bloque = bloquesInfo[index];
-
-                        return GestureDetector(
-                          onTap: () {
-                            // Al presionar, redirige a la ventana de detalle
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetalleBloque(
-                                  titulo: bloque["titulo"] ?? "Sin título",
-                                  descripcion:
-                                      bloque["descripcion"] ??
-                                      "Sin descripción",
-                                  imagen:
-                                      bloque["imagen"] ??
-                                      "assets/img/default.png",
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 150,
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.blue[100 * ((index % 8) + 1)],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            // Mostrar imagen y título dentro del bloque
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Image.asset(
-                                    bloque["imagen"] ??
-                                        "assets/img/default.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  bloque["titulo"] ?? "Sin título",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
+    return Scaffold(
+      body: TinteroBackground(
+        image: fondoPerfil,
+        opacity: 0.58,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(20, 62, 0, 92),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 22),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          TinteroLogo(width: 72),
+                          CircleAvatar(
+                            radius: 34,
+                            backgroundColor: Color(0xFFD4EFF8),
+                            backgroundImage: AssetImage(tinteroAvatar),
                           ),
-                        );
-                      }),
+                        ],
+                      ),
                     ),
-                  ),
-
-                  SizedBox(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(bloquesInfo2.length, (index) {
-                        final bloque = bloquesInfo2[index];
-
-                        return GestureDetector(
-                          onTap: () {
-                            // Al presionar, redirige a la ventana de detalle
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetalleBloque(
-                                  titulo: bloque["titulo"] ?? "Sin título",
-                                  descripcion:
-                                      bloque["descripcion"] ??
-                                      "Sin descripción",
-                                  imagen:
-                                      bloque["imagen"] ??
-                                      "assets/img/default.png",
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 150,
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.blue[100 * ((index % 8) + 1)],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            // Mostrar imagen y título dentro del bloque
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Image.asset(
-                                    bloque["imagen"] ??
-                                        "assets/img/default.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  bloque["titulo"] ?? "Sin título",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                    const SizedBox(height: 26),
+                    const Text(
+                      "Continuar leyendo",
+                      style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
-                  ),
-
-                  SizedBox(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(bloquesInfo3.length, (index) {
-                        final bloque = bloquesInfo3[index];
-
-                        return GestureDetector(
-                          onTap: () {
-                            // Al presionar, redirige a la ventana de detalle
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetalleBloque(
-                                  titulo: bloque["titulo"] ?? "Sin título",
-                                  descripcion:
-                                      bloque["descripcion"] ??
-                                      "Sin descripción",
-                                  imagen:
-                                      bloque["imagen"] ??
-                                      "assets/img/default.png",
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 150,
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.blue[100 * ((index % 8) + 1)],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            // Mostrar imagen y título dentro del bloque
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Image.asset(
-                                    bloque["imagen"] ??
-                                        "assets/img/default.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  bloque["titulo"] ?? "Sin título",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                    const SizedBox(height: 28),
+                    _BookGrid(books: continuar, includeAdd: true),
+                    const SizedBox(height: 80),
+                    const Text(
+                      "Lo nuevo en Tintero",
+                      style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
-                  ),
-
-                  SizedBox(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(bloquesInfo4.length, (index) {
-                        final bloque = bloquesInfo4[index];
-
-                        return GestureDetector(
-                          onTap: () {
-                            // Al presionar, redirige a la ventana de detalle
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetalleBloque(
-                                  titulo: bloque["titulo"] ?? "Sin título",
-                                  descripcion:
-                                      bloque["descripcion"] ??
-                                      "Sin descripción",
-                                  imagen:
-                                      bloque["imagen"] ??
-                                      "assets/img/default.png",
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: 150,
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.blue[100 * ((index % 8) + 1)],
-                              borderRadius: BorderRadius.circular(12),
+                    const SizedBox(height: 28),
+                    SizedBox(
+                      height: 154,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: nuevos.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 30),
+                        itemBuilder: (context, index) {
+                          final book = nuevos[index];
+                          return GestureDetector(
+                            onTap: () => _openBook(context, book),
+                            child: BookCover(
+                              image: book["imagen"]!,
+                              width: 120,
+                              height: 154,
                             ),
-                            // Mostrar imagen y título dentro del bloque
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: Image.asset(
-                                    bloque["imagen"] ??
-                                        "assets/img/default.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  bloque["titulo"] ?? "Sin título",
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const navegacion(),
-
-            BotonLuna(onToggle: (isDark) => setState(() {})),
-          ],
+              const TinteroBottomNav(currentIndex: 0),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-// Ventana de detalle que muestra título, descripción e imagen
+class _BookGrid extends StatelessWidget {
+  final List<Map<String, String>> books;
+  final bool includeAdd;
+
+  const _BookGrid({required this.books, this.includeAdd = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 20,
+      runSpacing: 34,
+      children: [
+        for (final book in books)
+          GestureDetector(
+            onTap: () => _openBook(context, book),
+            child: BookCover(image: book["imagen"]!, width: 120, height: 154),
+          ),
+        if (includeAdd)
+          Container(
+            width: 120,
+            height: 154,
+            alignment: Alignment.center,
+            color: tinteroDeep,
+            child: const Icon(Icons.add, color: Colors.white, size: 38),
+          ),
+      ],
+    );
+  }
+}
+
+void _openBook(BuildContext context, Map<String, String> book) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => DetalleBloque(
+        titulo: book["titulo"]!,
+        descripcion: book["descripcion"]!,
+        imagen: book["imagen"]!,
+        autor: book["autor"]!,
+      ),
+    ),
+  );
+}
+
 class DetalleBloque extends StatelessWidget {
   final String titulo;
   final String descripcion;
   final String imagen;
+  final String autor;
 
   const DetalleBloque({
     super.key,
     required this.titulo,
     required this.descripcion,
     required this.imagen,
+    required this.autor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(titulo)),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(imagen, width: 200, height: 200, fit: BoxFit.cover),
-          const SizedBox(height: 20),
-          Text(descripcion, style: const TextStyle(fontSize: 20)),
-        ],
+      body: TinteroBackground(
+        image: fondoGeneral,
+        opacity: 0.36,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(22, 46, 22, 92),
+                child: Column(
+                  children: [
+                    const TinteroLogo(width: 105),
+                    const SizedBox(height: 24),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: tinteroPanel,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: BookCover(
+                            image: imagen,
+                            width: 88,
+                            height: 164,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                titulo,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text(
+                                'Autor"$autor"',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(height: 28),
+                              const Text(
+                                "Sipnosis",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(22),
+                                decoration: BoxDecoration(
+                                  color: tinteroPanel,
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                child: Text(
+                                  descripcion,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 60),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.fromLTRB(30, 32, 30, 34),
+                      decoration: BoxDecoration(
+                        color: tinteroPanel,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        "$titulo es una historia pensada para lectores que disfrutan mundos imaginativos, personajes memorables y aventuras que mezclan fantasia, aprendizaje y curiosidad.",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 36),
+                    TinteroButton(
+                      text: "Continua Leyendo",
+                      width: 258,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+              const TinteroBottomNav(currentIndex: 0),
+            ],
+          ),
+        ),
       ),
     );
   }

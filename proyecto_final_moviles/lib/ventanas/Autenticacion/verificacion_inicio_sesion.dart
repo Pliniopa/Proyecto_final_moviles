@@ -1,42 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:proyecto_final_moviles/temas/estilo_tintero.dart';
 
-
-class VerificacionInicioSesion extends StatefulWidget {
+class VerificacionInicioSesion extends StatelessWidget {
   const VerificacionInicioSesion({super.key});
 
   @override
-  State<VerificacionInicioSesion> createState() => _VerificacionInicioSesionState();
-}
-
-class _VerificacionInicioSesionState extends State<VerificacionInicioSesion> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Verificación de Inicio de Sesión",
-              style: TextStyle(
-                fontSize: 40, // tamaño grande
-                fontWeight: FontWeight.bold,
+      body: TinteroBackground(
+        image: fondoInicio,
+        opacity: 0.58,
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(28),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const TinteroLogo(width: 170),
+                  const SizedBox(height: 44),
+                  const Text(
+                    "Usuario Registrado con Éxito",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 46),
+                  TinteroButton(
+                    text: "Iniciar sesion",
+                    width: 260,
+                    onPressed: () => context.goNamed("inicio_sesion"),
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                // Aquí iría tu navegación, por ejemplo con go_router:
-                context.goNamed("inicio_sesion");
-              },
-              child: const Text("Iniciar sesion"),
-            ),
-          ],
+          ),
         ),
       ),
     );

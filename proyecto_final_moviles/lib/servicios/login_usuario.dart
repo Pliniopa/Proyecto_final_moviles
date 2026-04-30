@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 Future<Map<String, dynamic>> registrarUsuario(
-    String usuario,
-    String contrasena,
-    String nombre,
-    String fechaNacimiento) async {
-  
+  String usuario,
+  String contrasena,
+  String nombre,
+  String fechaNacimiento,
+) async {
   final url = Uri.parse("http://127.0.0.1:8000/registrar"); // Ajusta tu host
   final response = await http.post(
     url,
@@ -27,17 +27,14 @@ Future<Map<String, dynamic>> registrarUsuario(
 }
 
 Future<Map<String, dynamic>> loginUsuario(
-    String usuario,
-    String contrasena) async {
-  
+  String usuario,
+  String contrasena,
+) async {
   final url = Uri.parse("http://127.0.0.1:8000/login");
   final response = await http.post(
     url,
     headers: {"Content-Type": "application/json"},
-    body: jsonEncode({
-      "usuario": usuario,
-      "contrasena": contrasena,
-    }),
+    body: jsonEncode({"usuario": usuario, "contrasena": contrasena}),
   );
 
   if (response.statusCode == 200) {

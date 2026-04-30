@@ -10,7 +10,7 @@ class IconoInicio extends StatelessWidget {
     return ClipOval(
       child: Image.asset(
         imagen_1,
-        width: 100,   // tamaño visible
+        width: 100, // tamaño visible
         height: 100,
         fit: BoxFit.cover,
       ),
